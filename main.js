@@ -157,7 +157,7 @@ for (let i = 0; i < posts.length; i++) {
                     </div>
                     <div class="post-meta__data">
                         <div class = "post-meta__author">${posts[i]["author"]["name"]}</div>
-                        <div class="post-meta__time">${posts[i][convertDigitIn("created")]}</div>
+                        <div class="post-meta__time">${convertDigitIn(posts[i]["created"])}</div>
                     </div>                    
                 </div>
             </div>
@@ -195,20 +195,37 @@ const likesBtns = document.querySelectorAll("div.likes__cta");
 const iconBtns = document.querySelectorAll("a.like-button");
 
 //creo un array per sapere quale id post ho messo il like
-const array = [];
+const arrayId = [];
+
+let count = false;
 
 for (let i = 0; i < likesBtns.length; i++) {
     likesBtns[i].addEventListener("click", function () {
-        //console.log(i);
-        //aggiungo un 1 ogni volta che clicco
-        posts[i]["likes"] += 1;
-        //lo inserisco nell'html
-        likes[i].innerHTML = posts[i]["likes"];
-        console.log(posts[i]["likes"]);
-        //inserisco quale id ho cliccato
-        array.push(posts[i]["id"]);
-        console.log(array);
-        //aggiungo la classe per cambiare il colore
-        iconBtns[i].classList.add("like-button--liked");
+        //se contiene già la classe
+        if (!iconBtns[i].classList.contains("like-button--liked")) {
+            //aggiungo un 1 ogni volta che clicco
+            posts[i]["likes"] += 1;
+            //lo inserisco nell'html
+            likes[i].innerHTML = posts[i]["likes"];
+            console.log(posts[i]["likes"]);
+            //inserisco quale id ho cliccato
+            arrayId.push(posts[i]["id"]);
+            console.log(arrayId);
+            //aggiungo la classe per cambiare il colore
+            iconBtns[i].classList.add("like-button--liked");
+        } else {
+            //elimino di un like ogni volta che clicco
+            posts[i]["likes"] += -1;
+            //lo inserisco nell'html
+            likes[i].innerHTML = posts[i]["likes"];
+            console.log(posts[i]["likes"]);
+            //elimino quale id ho cliccato
+            console.log(posts[i]["id"]);
+            console.log(arrayId.indexOf(posts[i]["id"]));
+            arrayId.splice(arrayId.indexOf(posts[i]["id"]));
+            console.log(arrayId);
+            //elimino la classe per cambiare il colore
+            iconBtns[i].classList.remove("like-button--liked");
+        }
     });
 }
