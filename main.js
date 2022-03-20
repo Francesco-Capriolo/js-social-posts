@@ -146,6 +146,13 @@ function convertDigitIn(str) {
     return str.split('-').reverse().join('/');
 }
 
+//far vedere solo le prime lettere di un nome
+function firstLetter(myStr) {
+    let matches = myStr.match(/\b(\w)/g);
+    return matches.join('');
+}
+
+
 for (let i = 0; i < posts.length; i++) {
     carouselContent += `
     <div class="post">
@@ -153,7 +160,7 @@ for (let i = 0; i < posts.length; i++) {
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
                         <img class = "profile-pic" src="${posts[i]["author"]["image"]}"
-                        alt = "${posts[i]["author"]["name"]}">
+                        alt = "${firstLetter(posts[i]["author"]["name"])}">
                     </div>
                     <div class="post-meta__data">
                         <div class = "post-meta__author">${posts[i]["author"]["name"]}</div>
@@ -168,14 +175,13 @@ for (let i = 0; i < posts.length; i++) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" data-postid="1">
+                        <a class ="like-button js-like-button" data-postid="${posts[i]["id"]}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id = "like-counter-1"
-                        class = "js-likes-counter">${posts[i]["likes"]}</b> persone
+                        Piace a <b id ="like-counter-${posts[i]["id"]}" class = "js-likes-counter">${posts[i]["likes"]}</b> persone
                     </div>
                 </div> 
             </div>            
@@ -222,7 +228,8 @@ for (let i = 0; i < likesBtns.length; i++) {
             //elimino quale id ho cliccato
             console.log(posts[i]["id"]);
             console.log(arrayId.indexOf(posts[i]["id"]));
-            arrayId.splice(arrayId.indexOf(posts[i]["id"]));
+            arrayId.splice((posts[i]["id"], 1));
+            console.warn(arrayId.splice((posts[i]["id"], 1)));
             console.log(arrayId);
             //elimino la classe per cambiare il colore
             iconBtns[i].classList.remove("like-button--liked");
