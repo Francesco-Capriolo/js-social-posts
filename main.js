@@ -226,10 +226,10 @@ for (let i = 0; i < likesBtns.length; i++) {
             likes[i].innerHTML = posts[i]["likes"];
             console.log(posts[i]["likes"]);
             //elimino quale id ho cliccato
-            console.log(posts[i]["id"]);
+            console.warn(posts[i]["id"]);
             console.log(arrayId.indexOf(posts[i]["id"]));
-            arrayId.splice((posts[i]["id"], 1));
-            console.warn(arrayId.splice((posts[i]["id"], 1)));
+            let indexArray = arrayId.indexOf(posts[i]["id"]);
+            arrayId.splice(indexArray, 1);
             console.log(arrayId);
             //elimino la classe per cambiare il colore
             iconBtns[i].classList.remove("like-button--liked");
